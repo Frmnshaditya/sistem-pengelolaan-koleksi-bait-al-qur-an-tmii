@@ -1,0 +1,6 @@
+{
+  "name": "Sistem Pengelolaan Koleksi Bait Al-Qur’an TMII",
+  "description": "Sistem Informasi Manajemen Data Koleksi Museum Bait Al-Qur’an TMII Berbasis Web dengan Katalog Publik, Manajemen Koleksi, Dashboard Statistik, Master Data, Log Aktivitas, dan Ekspor Laporan.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

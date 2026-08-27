@@ -1,0 +1,362 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-serif: "Source Serif 4", Georgia, serif;
+    --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, .font-serif {
+    font-family: var(--font-serif);
+  }
+}
+
+/* ==========================================================================
+   PRINT MEDIA QUERIES & PAPER FORMATTING SPECIFICATIONS
+   Target: A4 / Letter Paper Document Generation for Museum Reports & Collections
+   ========================================================================== */
+
+@page {
+  size: A4 portrait;
+  margin: 12mm 14mm 12mm 14mm;
+}
+
+@page landscape-report {
+  size: A4 landscape;
+  margin: 10mm 12mm 10mm 12mm;
+}
+
+@media print {
+  /* 1. Global Reset & Color Fidelity */
+  *,
+  *::before,
+  *::after {
+    background-color: transparent !important;
+    color: #0f172a !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 10pt !important;
+    line-height: 1.45 !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* 2. Explicitly Hide Non-Printable UI Elements */
+  header:not(.print-header),
+  nav,
+  aside,
+  footer:not(.print-footer),
+  .navbar,
+  .sidebar,
+  #navbar,
+  #btn-toggle-sidebar,
+  #input-global-search,
+  .no-print,
+  .print\:hidden,
+  button,
+  input,
+  select,
+  textarea,
+  .toast,
+  .pagination,
+  .search-bar,
+  .filter-bar,
+  .toolbar,
+  .tabs-navigation,
+  .view-mode-toggle,
+  .modal-close-btn,
+  .action-buttons,
+  .qr-scanner-overlay,
+  [role="navigation"],
+  [role="tablist"],
+  [role="dialog"] > div:first-child:not([role="document"]),
+  .shadow-xs,
+  .shadow-sm,
+  .shadow-md,
+  .shadow-lg,
+  .shadow-xl,
+  .shadow-2xl,
+  .animate-in,
+  .backdrop-blur-md,
+  .backdrop-blur-xs,
+  .hover\:scale-105 {
+    display: none !important;
+  }
+
+  /* Reveal explicitly printable elements */
+  .print-only,
+  .print-show,
+  .print\:block {
+    display: block !important;
+  }
+
+  .print-flex,
+  .print\:flex {
+    display: flex !important;
+  }
+
+  .print-grid,
+  .print\:grid {
+    display: grid !important;
+  }
+
+  /* 3. Main Content & Root Reset (Remove screen offsets) */
+  #root,
+  #root > div,
+  main,
+  .min-h-screen,
+  .flex-1 {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+    position: static !important;
+    overflow: visible !important;
+  }
+
+  /* 4. Page Break & Pagination Controls */
+  .page-break,
+  .page-break-before,
+  .break-before-page {
+    page-break-before: always !important;
+    break-before: page !important;
+  }
+
+  .page-break-after,
+  .break-after-page {
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+
+  .avoid-break,
+  .page-break-inside-avoid,
+  .break-inside-avoid,
+  .break-inside-avoid-page,
+  .no-break {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    break-inside: avoid-page !important;
+  }
+
+  /* Prevent headings from orphaning at bottom of page */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+    break-after: avoid-page !important;
+    color: #001e15 !important;
+  }
+
+  /* Text & Description Paragraphs Pagination Safeguards */
+  p, li, blockquote {
+    orphans: 4 !important;
+    widows: 4 !important;
+  }
+
+  /* Long descriptions and curatorial review text blocks avoid splitting mid-row */
+  .description-block,
+  .curatorial-section,
+  .historical-significance,
+  .codicology-notes,
+  .curatorial-sheet-box,
+  .spec-grid-container,
+  div[class*="bg-"][class*="rounded"] {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    break-inside: avoid-page !important;
+  }
+
+  /* 5. Printable Report Tables & Rows Safeguards */
+  .report-table-container,
+  div:has(> table),
+  .overflow-x-auto {
+    overflow: visible !important;
+    width: 100% !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 8.5pt !important;
+    margin-top: 8pt !important;
+    margin-bottom: 12pt !important;
+    page-break-inside: auto !important;
+    break-inside: auto !important;
+  }
+
+  thead {
+    display: table-header-group !important; /* Repeats table header across pages */
+    break-inside: avoid !important;
+  }
+
+  tfoot {
+    display: table-footer-group !important;
+    break-inside: avoid !important;
+  }
+
+  tbody {
+    display: table-row-group !important;
+  }
+
+  /* Ensure rows never split across pages */
+  tr,
+  tr.table-row {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    break-inside: avoid-page !important;
+  }
+
+  th,
+  td {
+    border: 0.75pt solid #cbd5e1 !important;
+    padding: 4.5pt 6pt !important;
+    text-align: left !important;
+    vertical-align: top !important;
+    word-break: normal !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  th {
+    background-color: #f1f5f9 !important;
+    color: #001e15 !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    font-size: 7.5pt !important;
+    letter-spacing: 0.4px !important;
+    border-bottom: 1.5pt solid #94a3b8 !important;
+  }
+
+  tbody tr:nth-child(even) td {
+    background-color: #f8fafc !important;
+  }
+
+  /* Condition Badges in Print */
+  span[class*="rounded"] {
+    border: 0.5pt solid #94a3b8 !important;
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+    padding: 1pt 4pt !important;
+    font-size: 7.5pt !important;
+    display: inline-block !important;
+    font-weight: 600 !important;
+  }
+
+  /* 6. Signature Block & Endorsement Protection */
+  .signature-block,
+  .print-footer,
+  .curatorial-sign-off,
+  div:has(> p.font-semibold:contains("Mengetahui")),
+  div:has(> p:contains("Kepala Unit Kurasi")) {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    break-inside: avoid-page !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 20pt !important;
+    margin-top: 20pt !important;
+    padding-top: 10pt !important;
+    border-top: 1pt solid #cbd5e1 !important;
+  }
+
+  /* 7. Collection Detail Modal Paper Formatting */
+  /* Remove modal constraints and display full-page document */
+  .fixed.inset-0.z-50 {
+    position: static !important;
+    display: block !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .fixed.inset-0.z-50 > div {
+    position: static !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Image stage in detail print */
+  .aspect-4\/3,
+  .relative.rounded-2xl.overflow-hidden {
+    aspect-ratio: auto !important;
+    max-height: 200pt !important;
+    border-radius: 6pt !important;
+    border: 0.75pt solid #cbd5e1 !important;
+    background: #ffffff !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .aspect-4\/3 img,
+  .relative.rounded-2xl.overflow-hidden img {
+    max-height: 190pt !important;
+    width: auto !important;
+    margin: 0 auto !important;
+    object-fit: contain !important;
+  }
+
+  /* Grid layouts in print */
+  .grid.grid-cols-1.lg\:grid-cols-12 {
+    display: block !important;
+  }
+
+  .lg\:col-span-5,
+  .lg\:col-span-7 {
+    width: 100% !important;
+    display: block !important;
+  }
+
+  .grid.grid-cols-2.sm\:grid-cols-3 {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6pt !important;
+    border: 0.75pt solid #cbd5e1 !important;
+    padding: 6pt !important;
+    margin-bottom: 8pt !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Borders on content boxes */
+  .bg-\[\#ffffff\].p-4.rounded-xl.border,
+  .bg-\[\#bcedd8\]\/15.p-4.rounded-xl.border {
+    border: 0.75pt solid #cbd5e1 !important;
+    background-color: #f8fafc !important;
+    padding: 6pt 8pt !important;
+    margin-bottom: 8pt !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+}
+
